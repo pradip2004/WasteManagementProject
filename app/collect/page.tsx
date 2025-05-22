@@ -134,16 +134,16 @@ export default function CollectPage() {
       ]
 
       const prompt = `You are an expert in waste management and recycling. Analyze this image and provide:
-        1. Confirm if the waste type matches: ${selectedTask.wasteType}
-        2. Estimate if the quantity matches: ${selectedTask.amount}
-        3. Your confidence level in this assessment (as a percentage)
-        
-        Respond in JSON format like this:
-        {
-          "wasteTypeMatch": true/false,
-          "quantityMatch": true/false,
-          "confidence": confidence level as a number between 0 and 1
-        }`
+1. Confirm if the waste type matches: ${selectedTask.wasteType}
+2. Estimate if the quantity is reasonably close to: ${selectedTask.amount} (it does not have to be a perfect match; small differences are acceptable)
+3. Your confidence level in this assessment (as a number between 0 and 1)
+
+Respond in JSON format like this:
+{
+  "wasteTypeMatch": true/false,
+  "quantityMatch": true/false, // Set to true if the quantity is close, even if not exact
+  "confidence": confidence level as a number between 0 and 1
+}`
 
       const result = await model.generateContent([prompt, ...imageParts])
       const response = await result.response
@@ -161,7 +161,11 @@ export default function CollectPage() {
         })
         setVerificationStatus('success')
         
-        if (parsedResult.wasteTypeMatch && parsedResult.quantityMatch && parsedResult.confidence > 0.7) {
+        if (
+          parsedResult.wasteTypeMatch &&
+          parsedResult.quantityMatch &&
+          parsedResult.confidence >= 0.7 // Allow 0.7 and above
+        ) {
           await handleStatusChange(selectedTask.id, 'verified')
           const earnedReward = Math.floor(Math.random() * 50) + 10 // Random reward between 10 and 59
           
