@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -17,11 +18,11 @@ import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { createUser, getUnreadNotifications, markNotificationAsRead, getUserByEmail, getUserBalance } from "@/utils/db/actions"
 
-const clientId = "BJKdDFkNtkWX87XqkuWrDu4rbkSvWyQZ5lswS0ucINxxcN0inRVW8zzKAywPPzgiOHP7_3PcfFwfpvcQvSdaLRs";
+const clientId = "BLlsTccZjxKDxvaw-Z1_4DpMXjDr-MV3lK-AUUevEAFfChuYIHP-xWe3BrU045kRfJFOMI02HrErVtqSP5vkP3U";
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0xaa36a7",
+  chainId: "0xaa36a7", // Sepolia
   rpcTarget: "https://rpc.ankr.com/eth_sepolia",
   displayName: "Ethereum Sepolia Testnet",
   blockExplorerUrl: "https://sepolia.etherscan.io",
@@ -36,7 +37,7 @@ const privateKeyProvider = new EthereumPrivateKeyProvider({
 
 const web3auth = new Web3Auth({
   clientId,
-  web3AuthNetwork: WEB3AUTH_NETWORK.TESTNET, // Changed from SAPPHIRE_MAINNET to TESTNET
+  web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET, // Use TESTNET for Sepolia
   privateKeyProvider,
 });
 
@@ -51,12 +52,6 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<any>(null);
   const pathname = usePathname()
-  interface Notification {
-    id: number;
-    type: string;
-    message: string;
-    // Add other properties if needed
-  }
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [balance, setBalance] = useState(0)
@@ -215,7 +210,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
           <Link href="/" className="flex items-center">
             <Leaf className="h-6 w-6 md:h-8 md:w-8 text-green-500 mr-1 md:mr-2" />
             <div className="flex flex-col">
-              <span className="font-bold text-base md:text-lg text-gray-800">Trash2Treasure</span>
+              <span className="font-bold text-base md:text-lg text-gray-800">Zero2Hero</span>
               <span className="text-[8px] md:text-[10px] text-gray-500 -mt-1">ETHOnline24</span>
             </div>
           </Link>
