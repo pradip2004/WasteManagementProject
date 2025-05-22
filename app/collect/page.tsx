@@ -148,9 +148,12 @@ export default function CollectPage() {
       const result = await model.generateContent([prompt, ...imageParts])
       const response = await result.response
       const text = response.text()
-      
+
+      // Remove Markdown code block if present
+      const cleanedText = text.replace(/```json|```/g, '').trim();
+
       try {
-        const parsedResult = JSON.parse(text)
+        const parsedResult = JSON.parse(cleanedText)
         setVerificationResult({
           wasteTypeMatch: parsedResult.wasteTypeMatch,
           quantityMatch: parsedResult.quantityMatch,

@@ -20,10 +20,30 @@ import { createUser, getUnreadNotifications, markNotificationAsRead, getUserByEm
 
 const clientId = "BLlsTccZjxKDxvaw-Z1_4DpMXjDr-MV3lK-AUUevEAFfChuYIHP-xWe3BrU045kRfJFOMI02HrErVtqSP5vkP3U";
 
-const chainConfig = {
-  chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0xaa36a7", // Sepolia
-  rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+// const chainConfig = {
+//   chainNamespace: CHAIN_NAMESPACES.EIP155,
+//   chainId: "0xaa36a7", // Sepolia
+//   rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+//   displayName: "Ethereum Sepolia Testnet",
+//   blockExplorerUrl: "https://sepolia.etherscan.io",
+//   ticker: "ETH",
+//   tickerName: "Ethereum",
+//   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+// };
+
+const chainConfig: {
+  chainNamespace: string,
+  chainId: string,
+  rpcTarget: string,
+  displayName: string,
+  blockExplorerUrl: string,
+  ticker: string,
+  tickerName: string,
+  logo: string,
+} = {
+  chainNamespace: "eip155",
+  chainId: "0xaa36a7",
+  rpcTarget: "https://rpc.ankr.com/eth_sepolia/66fd3dcd3375325e51aa2b3c62012e00273c6dcb70ddade718155cd3487cdfc7",
   displayName: "Ethereum Sepolia Testnet",
   blockExplorerUrl: "https://sepolia.etherscan.io",
   ticker: "ETH",

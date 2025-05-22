@@ -9,8 +9,8 @@ import { createUser, getUserByEmail, createReport, getRecentReports } from '@/ut
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast'
 
-const geminiApiKey = process.env.GEMINI_API_KEY;
-const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
+const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY!;
+const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
 const libraries: Libraries = ['places'];
 
@@ -128,9 +128,12 @@ export default function ReportPage() {
       const result = await model.generateContent([prompt, ...imageParts]);
       const response = await result.response;
       const text = response.text();
-      
+
+      // Remove Markdown code block if present
+      const cleanedText = text.replace(/```json|```/g, '').trim();
+
       try {
-        const parsedResult = JSON.parse(text);
+        const parsedResult = JSON.parse(cleanedText);
         if (parsedResult.wasteType && parsedResult.quantity && parsedResult.confidence) {
           setVerificationResult(parsedResult);
           setVerificationStatus('success');
@@ -388,3 +391,5 @@ export default function ReportPage() {
     </div>
   )
 }
+
+
